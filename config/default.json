@@ -1,0 +1,4 @@
+{
+  "mongoURI": "mongodb+srv://feem:feem1234@ecommerce-bs6ik.mongodb.net/test?retryWrites=true&w=majority",
+  "jwtSecret": "jwtsecrettokenisgood"
+}
