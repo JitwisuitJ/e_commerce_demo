@@ -6,13 +6,13 @@ const User = require('../../models/User');
 
 // @route   GET api/auth
 // @desc    Get User from token header ___ Do this after Register Login and Start Application
-// @access  Public
+// @access  Private
 router.get('/', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password');
     res.json(user);
   } catch (err) {
-    console.errro(err.message);
+    console.error(err.message);
     res.status(500).send('Server Error');
   }
 });

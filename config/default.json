@@ -1,4 +1,7 @@
 {
   "mongoURI": "mongodb+srv://feem:feem1234@ecommerce-bs6ik.mongodb.net/test?retryWrites=true&w=majority",
-  "jwtSecret": "jwtsecrettokenisgood"
+  "jwtSecret": "jwtsecrettokenisgood",
+  "cloudinary_cloud_name": "theflash",
+  "cloudinary_api_key": "365429338189483",
+  "cloudinary_api_secret": "g1hqPrs5GBfzNp_rRFBQrrlDMbI"
 }

@@ -6,6 +6,7 @@ const config = require('config');
 const { check, validationResult } = require('express-validator');
 
 const User = require('../../models/User');
+const Cart = require('../../models/Cart');
 
 // @route   POST api/users/register
 // @desc    User Register
@@ -51,6 +52,9 @@ router.post(
       const salt = await bcrypt.genSalt(10);
       user.password = await bcrypt.hash(password, salt);
       await user.save();
+
+      // Create cart for new user
+      await new Cart({ user: user.id }).save();
 
       // Return JsonWebToken
       const payload = {
