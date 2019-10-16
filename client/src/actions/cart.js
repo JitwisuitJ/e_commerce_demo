@@ -39,7 +39,6 @@ export const loadCart = () => async dispatch => {
 
 // Add Product to User's Cart
 export const addProductToCart = (productId, quantity) => async dispatch => {
-  dispatch({ type: CART_LOADING });
   const config = {
     headers: {
       'Content-Type': 'application/json'

@@ -1,18 +1,23 @@
-import React, { Fragment } from 'react';
-import { useSelector } from 'react-redux';
+import React, { Fragment, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import CartItem from './CartItem';
 import CartTotal from './CartTotal';
-
+import { loadCart } from '../../actions/cart';
 import Spinner from '../layout/Spinner';
 import { Link } from 'react-router-dom';
 
 import { Row, Container, ListGroup } from 'reactstrap';
 
 const CartIndex = () => {
+  const dispatch = useDispatch();
   const products = useSelector(state => state.cartReducer.products);
   const loading = useSelector(state => state.cartReducer.loading);
 
   let totalPrice = 0;
+
+  useEffect(() => {
+    dispatch(loadCart());
+  }, [dispatch]);
 
   if (products.length > 0 && products !== null) {
     products.forEach(product => {
