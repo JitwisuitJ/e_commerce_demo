@@ -1,0 +1,41 @@
+body {
+  background: #ebfaf4;
+}
+
+.landing {
+  height: 90vh;
+}
+
+.landing-inner {
+  color: #000000;
+  height: 100%;
+  width: 100%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4rem;
+}
+
+.container-main {
+  width: 80%;
+  margin-top: 6rem;
+  margin-bottom: 3rem;
+  padding-bottom: 4rem;
+}
+
+.crop-text-3 {
+  -webkit-line-clamp: 3;
+  overflow: auto;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}

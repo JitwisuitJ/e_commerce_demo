@@ -67,7 +67,7 @@ router.post(
         payload,
         config.get('jwtSecret'),
         {
-          expiresIn: 36000
+          expiresIn: 3600
         },
         (err, token) => {
           if (err) throw err;
@@ -76,7 +76,7 @@ router.post(
       );
     } catch (err) {
       console.error(err.message);
-      res.status(500).send('Server error');
+      res.status(500).json({ errors: [{ msg: 'Server Error' }] });
     }
   }
 );
@@ -127,7 +127,7 @@ router.post(
         payload,
         config.get('jwtSecret'),
         {
-          expiresIn: 36000
+          expiresIn: 3600
         },
         (err, token) => {
           if (err) throw err;
@@ -136,7 +136,7 @@ router.post(
       );
     } catch (err) {
       console.error(err.message);
-      res.status(500).send('Server error');
+      res.status(500).json({ errors: [{ msg: 'Server Error' }] });
     }
   }
 );

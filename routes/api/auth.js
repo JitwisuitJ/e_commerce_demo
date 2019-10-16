@@ -5,7 +5,7 @@ const auth = require('../../middleware/auth');
 const User = require('../../models/User');
 
 // @route   GET api/auth
-// @desc    Get User from token header ___ Do this after Register Login and Start Application
+// @desc    Get User from token header ___ Do this after Register, Login and Start Application
 // @access  Private
 router.get('/', auth, async (req, res) => {
   try {
@@ -13,7 +13,7 @@ router.get('/', auth, async (req, res) => {
     res.json(user);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server Error');
+    res.status(500).json({ errors: [{ msg: 'Server Error' }] });
   }
 });
 

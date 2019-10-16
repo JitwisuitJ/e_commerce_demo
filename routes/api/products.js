@@ -13,11 +13,26 @@ const Cart = require('../../models/Cart');
 // @access  Private
 router.get('/', auth, async (req, res) => {
   try {
-    const products = await Product.find();
+    const products = await Product.find().sort({ date: -1 });
     return res.json(products);
   } catch (err) {
     console.error(err.message);
-    return res.status(500).send('Server Error');
+    return res.status(500).json({ errors: [{ msg: 'Server Error' }] });
+  }
+});
+
+// @route   GET api/products/search/:productName
+// @desc    Get search products
+// @access  Private
+router.get('/search/:productName', auth, async (req, res) => {
+  try {
+    const products = await Product.find({
+      name: { $regex: req.params.productName, $options: 'i' }
+    }).sort({ date: -1 });
+    return res.json(products);
+  } catch (err) {
+    console.error(err.message);
+    return res.status(500).json({ errors: [{ msg: 'Server Error' }] });
   }
 });
 
@@ -57,9 +72,11 @@ router.post(
           .status(400)
           .json({ errors: [{ msg: 'Plaese include an image' }] });
       }
-      const { mimetype } = req.files.file;
+
+      const { mimetype } = req.files.image;
+
       if (!checkIfFileIsImage(mimetype)) {
-        res.status(400).json({
+        return res.status(400).json({
           errors: [
             { msg: 'Plaese make sure type of file is either .png or .jpeg' }
           ]
@@ -76,15 +93,19 @@ router.post(
       };
 
       // Upload Image
-      const { file } = req.files;
+      const { image } = req.files;
 
-      await cloudinary.uploader.upload(file.tempFilePath, (err, result) => {
-        if (err) {
-          console.error(err);
-          return res.status(500).send('Server error');
+      await cloudinary.uploader.upload(
+        image.tempFilePath,
+        { transformation: [{ width: 210, height: 210, crop: 'pad' }] },
+        (err, result) => {
+          if (err) {
+            console.error(err);
+            return res.status(500).json({ errors: [{ msg: 'Server Error' }] });
+          }
+          newProduct.imageUrl = result.url;
         }
-        newProduct.imageUrl = result.url;
-      });
+      );
 
       // Save to DB
       newProduct = new Product(newProduct);
@@ -93,7 +114,7 @@ router.post(
       res.json(newProduct);
     } catch (err) {
       console.error(err.message);
-      res.status(500).send('Server error');
+      res.status(500).json({ errors: [{ msg: 'Server Error' }] });
     }
   }
 );
@@ -115,7 +136,9 @@ router.put(
       const user = await User.findById(req.user.id).select('-password');
 
       if (!checkAdminRole(user.role)) {
-        res.status(401).json({ msg: 'Your role cannot update a product' });
+        return res
+          .status(401)
+          .json({ errors: [{ msg: 'Your role cannot update a product' }] });
       }
 
       let updatedProduct = await Product.findById(req.params.productId);
@@ -135,29 +158,35 @@ router.put(
       let imageUrl;
 
       if (req.files) {
-        const { mimetype } = req.files.file;
+        const { mimetype } = req.files.image;
 
         if (!checkIfFileIsImage(mimetype)) {
-          res.status(400).json({
+          return res.status(400).json({
             errors: [
               { msg: 'Plaese make sure type of file is either .png or .jpeg' }
             ]
           });
         }
 
-        const { file } = req.files;
+        const { image } = req.files;
 
-        await cloudinary.uploader.upload(file.tempFilePath, (err, result) => {
-          if (err) {
-            console.error(err);
-            return res.status(500).send('Server error');
+        await cloudinary.uploader.upload(
+          image.tempFilePath,
+          { transformation: [{ width: 210, height: 210, crop: 'pad' }] },
+          (err, result) => {
+            if (err) {
+              console.error(err);
+              return res
+                .status(500)
+                .json({ errors: [{ msg: 'Server Error' }] });
+            }
+            imageUrl = result.url;
           }
-          imageUrl = result.url;
-        });
+        );
       }
       // Check field updated
       const { name, price, description } = req.body;
-      if (!imageUrl || !name || !price || !description) {
+      if (!imageUrl && !name && !price && !description) {
         return res.status(400).json({
           errors: [{ msg: 'Plaese Include at least one filed' }]
         });
@@ -178,9 +207,10 @@ router.put(
       return res.json(updatedProduct);
     } catch (err) {
       if (err.kind == 'ObjectId') {
-        return res.status(400).json({ msg: 'Product not found' });
+        return res.status(400).json({ errors: [{ msg: 'Product not found' }] });
       }
-      return res.status(500).send('Server error');
+      console.error(err);
+      return res.status(500).json({ errors: [{ msg: 'Server Error' }] });
     }
   }
 );
@@ -193,12 +223,14 @@ router.delete('/delete/:productId', auth, async (req, res) => {
   const { productId } = req.params;
 
   if (!checkAdminRole(user.role)) {
-    res.status(401).json({ msg: 'Your role cannot delete a product' });
+    res
+      .status(401)
+      .json({ errors: [{ msg: 'Your role cannot delete a product' }] });
   }
 
   try {
     // Delete Product
-    await Product.findByIdAndRemove(productId);
+    const removeProduct = await Product.findByIdAndRemove(productId);
 
     // Delete Product in Carts
     await Cart.updateMany(
@@ -207,10 +239,10 @@ router.delete('/delete/:productId', auth, async (req, res) => {
       },
       { $pull: { products: { product: productId } } }
     );
-    return res.status(204).json({ msg: 'Product Deleted' });
+    return res.status(200).json(removeProduct);
   } catch (err) {
     console.error(err.message);
-    return res.status(500).send('Server Error');
+    return res.status(500).json({ errors: [{ msg: 'Server Error' }] });
   }
 });
 
