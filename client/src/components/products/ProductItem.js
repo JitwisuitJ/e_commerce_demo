@@ -19,6 +19,7 @@ import {
 const ProductItem = ({ productId, name, price, description, imageUrl }) => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.authReducer.user);
+  const cartLoading = useSelector(state => state.cartReducer.loading);
   const priceComma = Number(price).toLocaleString();
   return (
     user && (
@@ -38,6 +39,7 @@ const ProductItem = ({ productId, name, price, description, imageUrl }) => {
           <Button
             className='bg-success mb-2 btn-block  border border-light'
             onClick={e => dispatch(addProductToCart(productId, 1))}
+            disabled={cartLoading}
           >
             <i className='fas fa-shopping-cart text-white'></i>&nbsp;&nbsp;Add
             To Cart
