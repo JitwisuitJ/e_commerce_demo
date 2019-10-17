@@ -1,8 +1,9 @@
-# DevConnector 2.0
+# E-Commerce Demo
 
 > E-Commerce Demo App
 
-This is a E-Commerce Demo App which used MERN stack technology to implement it. It's a simple of e-commerce system that includes authentication page, products page and cart.
+This is a E-Commerce Demo App which used MERN stack technology to implement it.
+It's a simple of e-commerce system that includes authentication page, products page and cart.
 
 ## Quick Start
 
