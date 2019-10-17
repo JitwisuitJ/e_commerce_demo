@@ -16,8 +16,8 @@ const Pagination = ({
   return (
     <nav>
       <ul className='pagination mt-4'>
-        <li className='page-item'>
-          {currentPage !== 1 ? (
+        {currentPage !== 1 ? (
+          <li className='page-item'>
             <a
               onClick={() => paginate(currentPage - 1)}
               className='page-link'
@@ -27,22 +27,36 @@ const Pagination = ({
               <span aria-hidden='true'>&laquo;</span>
               <span className='sr-only'>Previous</span>
             </a>
-          ) : (
-            <a className='page-link' href='#!' aria-label='Previous'>
+          </li>
+        ) : (
+          <li className='page-item disabled'>
+            <a
+              className='page-link'
+              href='#!'
+              tabindex='-1'
+              aria-label='Previous'
+            >
               <span aria-hidden='true'>&laquo;</span>
               <span className='sr-only'>Previous</span>
             </a>
-          )}
-        </li>
+          </li>
+        )}
+
         {pageNumbers.map(number => (
-          <li key={number} className='page-item'>
+          <li
+            key={number}
+            className={
+              number === currentPage ? 'page-item active' : 'page-item'
+            }
+          >
             <a onClick={() => paginate(number)} href='#!' className='page-link'>
               {number}
             </a>
           </li>
         ))}
-        <li className='page-item'>
-          {currentPage !== pageNumbers.length ? (
+
+        {currentPage !== pageNumbers.length ? (
+          <li className='page-item'>
             <a
               onClick={() => paginate(currentPage + 1)}
               className='page-link'
@@ -52,13 +66,15 @@ const Pagination = ({
               <span aria-hidden='true'>&raquo;</span>
               <span className='sr-only'>Next</span>
             </a>
-          ) : (
-            <a className='page-link' href='#!' aria-label='Next'>
+          </li>
+        ) : (
+          <li className='page-item disabled'>
+            <a className='page-link' href='#!' tabindex='-1' aria-label='Next'>
               <span aria-hidden='true'>&raquo;</span>
               <span className='sr-only'>Next</span>
             </a>
-          )}
-        </li>
+          </li>
+        )}
       </ul>
     </nav>
   );
