@@ -32,6 +32,7 @@ export const getProducts = () => async dispatch => {
     if (errors) {
       errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
     }
+
     dispatch({
       type: GET_PRODUCTS_FAIL,
       payload: { msg: err.response.statusText, status: err.response.status }
@@ -55,6 +56,7 @@ export const getProductsSearch = searchText => async dispatch => {
     if (errors) {
       errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
     }
+
     dispatch({
       type: GET_PRODUCTS_SEARCH_FAIL,
       payload: { msg: err.response.statusText, status: err.response.status }
@@ -84,6 +86,7 @@ export const addProduct = formData => async dispatch => {
     if (errors) {
       errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
     }
+
     dispatch({
       type: ADD_PRODUCT_FAIL,
       payload: { msg: err.response.statusText, status: err.response.status }
@@ -119,6 +122,7 @@ export const editProduct = (formData, productId) => async dispatch => {
     if (errors) {
       errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
     }
+
     dispatch({
       type: EDIT_PRODUCT_FAIL,
       payload: { msg: err.response.statusText, status: err.response.status }
@@ -157,7 +161,7 @@ export const deleteProduct = productId => async dispatch => {
 };
 
 // Set Page
-export const setCurrentPage = currentPage => async dispatch => {
+export const setCurrentPage = currentPage => dispatch => {
   dispatch({ type: PRODUCT_LOADING });
   dispatch({ type: SET_PRODUCT_PAGE, payload: currentPage });
 };

@@ -60,7 +60,9 @@ router.post(
       const user = await User.findById(req.user.id).select('-password');
 
       if (!checkAdminRole(user.role)) {
-        res.status(401).json({ msg: 'Your role cannot update a product' });
+        res
+          .status(401)
+          .json({ errors: [{ msg: 'Your role cannot add a product' }] });
       }
 
       const errors = validationResult(req);
@@ -138,7 +140,7 @@ router.put(
       if (!checkAdminRole(user.role)) {
         return res
           .status(401)
-          .json({ errors: [{ msg: 'Your role cannot update a product' }] });
+          .json({ errors: [{ msg: 'Your role cannot edit a product' }] });
       }
 
       let updatedProduct = await Product.findById(req.params.productId);

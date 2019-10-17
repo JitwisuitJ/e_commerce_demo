@@ -87,6 +87,7 @@ export const deleteProductInCart = productId => async dispatch => {
     if (errors) {
       errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
     }
+
     dispatch(setAlert('Remove product from cart Failed', 'danger'));
 
     dispatch({
@@ -121,7 +122,8 @@ export const checkOut = paymentData => async dispatch => {
     if (errors) {
       errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
     }
-    dispatch(setAlert('Purchased Failed', 'danger'));
+
+    dispatch(setAlert('Purchase Failed', 'danger'));
 
     dispatch({
       type: CHECKOUT_FAIL,
