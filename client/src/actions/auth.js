@@ -28,12 +28,6 @@ export const loadUser = () => async dispatch => {
       payload: res.data
     });
   } catch (err) {
-    const errors = err.response.data.errors;
-
-    if (errors) {
-      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
-    }
-
     dispatch({
       type: USER_LOADED_FAIL
     });

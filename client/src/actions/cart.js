@@ -24,12 +24,6 @@ export const loadCart = () => async dispatch => {
       payload: res.data.products
     });
   } catch (err) {
-    const errors = err.response.data.errors;
-
-    if (errors) {
-      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
-    }
-
     dispatch({
       type: CART_LOADED_FAIL,
       payload: { msg: err.response.statusText, status: err.response.status }
