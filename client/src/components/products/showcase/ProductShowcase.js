@@ -1,11 +1,11 @@
 import React, { Fragment, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentPage } from '../../actions/product';
+import { setCurrentPage } from '../../../actions/product';
 import { Row } from 'reactstrap';
 import ProductItem from './ProductItem';
-import Pagination from './Pagination';
+import PaginationProduct from './PaginationProduct';
 
-const Products = () => {
+const ProductShowcase = () => {
   const dispatch = useDispatch();
   const products = useSelector(state => state.productReducer.products);
   const currentPage = useSelector(state => state.productReducer.currentPage);
@@ -49,7 +49,7 @@ const Products = () => {
       </Row>
 
       <Row className='mt-2 justify-content-center'>
-        <Pagination
+        <PaginationProduct
           productsPerPage={productsPerPage}
           totalProducts={products.length}
           paginate={paginate}
@@ -64,4 +64,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default ProductShowcase;

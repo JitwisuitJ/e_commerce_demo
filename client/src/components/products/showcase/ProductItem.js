@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import DeleteProductModal from './DeleteProductModal';
-import EditProductModal from './EditProductModal';
-import { addProductToCart } from '../../actions/cart';
+import DeleteProductModal from './modal/DeleteProductModal';
+import EditProductModal from './modal/EditProductModal';
+import { addProductToCart } from '../../../actions/cart';
 
 import {
   Col,

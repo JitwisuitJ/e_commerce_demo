@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addProduct } from '../../actions/product';
+import { addProduct } from '../../../actions/product';
 
 import {
   Button,

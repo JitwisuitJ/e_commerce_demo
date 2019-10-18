@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect } from 'react';
-import Products from './Products';
-import ProductBar from './ProductBar';
+import ProductShowcase from './showcase/ProductShowcase';
+import ProductBar from './bar/ProductBar';
 import { useSelector, useDispatch } from 'react-redux';
 import { getProducts } from '../../actions/product';
 import Spinner from '../layout/Spinner';
@@ -22,7 +22,7 @@ const ProductIndex = () => {
   ) : (
     <Fragment>
       <ProductBar />
-      <Products />
+      <ProductShowcase />
     </Fragment>
   );
 };

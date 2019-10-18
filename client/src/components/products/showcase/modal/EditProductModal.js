@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { editProduct } from '../../actions/product';
+import { editProduct } from '../../../../actions/product';
 
 import {
   Button,

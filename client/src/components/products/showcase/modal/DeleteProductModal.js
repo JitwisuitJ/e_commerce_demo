@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { deleteProduct } from '../../actions/product';
+import { deleteProduct } from '../../../../actions/product';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
