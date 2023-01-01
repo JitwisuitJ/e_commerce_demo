@@ -15,7 +15,7 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.15.0",
-    "config": "^3.2.3",
+    "config": "^3.3.8",
     "express": "^4.17.1",
     "express-fileupload": "^1.1.6-alpha.5",
     "express-validator": "^6.2.0",
